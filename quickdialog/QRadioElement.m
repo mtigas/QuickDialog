@@ -24,6 +24,7 @@
 @synthesize values = _values;
 @synthesize items = _items;
 @synthesize itemsImageNames = _itemsImageNames;
+@synthesize shortItems = _shortItems;
 
 
 - (void)createElements {
@@ -44,6 +45,10 @@
 -(void)setItems:(NSArray *)items {
     _items = items;
     [self createElements];
+}
+
+-(void)setShortItems:(NSArray *)items {
+    _shortItems = items;
 }
 
 -(void)setItemsImageNames:(NSArray *)itemsImageNames {
@@ -132,7 +137,10 @@
 
     id selectedValue = nil;
     if (_selected >= 0 && _selected <_items.count){
-        selectedValue = [_items objectAtIndex:(NSUInteger) _selected];
+	if (_shortItems && _selected < _shortItems.count)
+	    selectedValue = [_shortItems objectAtIndex:(NSUInteger) _selected];
+	else
+            selectedValue = [_items objectAtIndex:(NSUInteger) _selected];
     }
 
     [self updateCell:cell selectedValue:selectedValue];
